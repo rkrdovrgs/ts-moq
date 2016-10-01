@@ -1,0 +1,27 @@
+{
+  "name": "ts-moq",
+  "version": "1.0.0",
+  "description": "Helpers to create mocks for unit testing Typescript applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkrdovrgs/ts-moq.git"
+  },
+  "keywords": [
+    "typescript",
+    "mock",
+    "moq"
+  ],
+  "author": "rkrdovrgs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rkrdovrgs/ts-moq/issues"
+  },
+  "homepage": "https://github.com/rkrdovrgs/ts-moq#readme",
+  "devDependencies": {
+    "typings": "^1.4.0"
+  }
+}

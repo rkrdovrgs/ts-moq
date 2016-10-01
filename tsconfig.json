@@ -1,0 +1,15 @@
+﻿{
+    "exclude": [
+        "typings/main.d.ts",
+        "typings/main",
+        "node_modules",
+        "jspm_packages"
+    ],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "system",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  }
+}
