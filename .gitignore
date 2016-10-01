@@ -253,5 +253,6 @@ paket-files/
 typings/
 gulpfile.js
 *.d.ts
+!index.d.ts
 *.js
 *.js.map
