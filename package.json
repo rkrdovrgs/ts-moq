@@ -2,9 +2,10 @@
   "name": "ts-moq",
   "version": "1.0.0",
   "description": "Helpers to create mocks for unit testing Typescript applications",
-  "main": "index.js",
+  "main": "moq.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
   },
   "homepage": "https://github.com/rkrdovrgs/ts-moq#readme",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "typescript": "^2.0.3",
     "typings": "^1.4.0"
   }
 }

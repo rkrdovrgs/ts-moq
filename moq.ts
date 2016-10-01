@@ -45,10 +45,10 @@ class PromiseMockQueue {
     }
 }
 
-export class Mock<T> {
+class Mock<T> {
     object: T;
 
-    static promiseQueue = new PromiseMockQueue();
+    static promiseQueue: PromiseMockQueue = new PromiseMockQueue();
 
     constructor() {
         this.object = <T>{};
@@ -130,4 +130,15 @@ export class Mock<T> {
     }
 }
 
+interface IMock {
+    Mock: {
+        <T>(): void,
+        promiseQueue: PromiseMockQueue
+    };
+}
+
+declare var m: IMock;
+declare module "ts-moq" {
+    export = m;
+}
 
