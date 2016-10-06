@@ -50,11 +50,52 @@ export class Mock<T> {
 
     static promiseQueue: PromiseMockQueue = new PromiseMockQueue();
 
-    constructor() {
-        this.object = <T>{};
+    constructor(Constructor? : T) {
+        this.object = !!Constructor ? new (<any>Constructor)() : <T>{};
     }
 
-    private spyOnDeepProperty(propName): ISpy {
+    private getPropertyName(propSelector: (obj: T) => any) : string {
+        let propName: string,
+            pattern = new RegExp("return\\s([a-zA-Z_$][a-zA-Z0-9_$]*\\.?)+"),
+            matches = pattern.exec(propSelector.toString());
+
+        if (!matches || !matches[0]) { throw "propSelector regex exception"; }
+
+        propName = matches[0].replace("return ", "").trim();
+        if (propName.indexOf(".") !== -1) {
+            propName = propName.substring(propName.indexOf(".") + 1);
+        }
+
+        return propName;
+    }
+
+    private defineDeepProperty<C>(propName: string, value: C) : C {
+        let segments = propName.split("."),
+            segmentLen = segments.length,
+            nextObj = this.object,
+            prevObj;
+
+        for (let i = 0; i < segmentLen; i++) {
+            let propNameSegment = segments[i];
+            prevObj = nextObj;
+            nextObj = nextObj[propNameSegment];
+            if (nextObj === undefined || nextObj === null) {
+                // not the last property segment
+                // means complex object should be created
+                // else it means it is the actual fuction to mock
+                if (segmentLen - i > 1) {
+                    prevObj[propNameSegment] = {};
+                } else {
+                    prevObj[propNameSegment] = value;
+                }
+            }
+        }
+
+        return value;
+    }
+
+
+    private spyOnDeepProperty(propName:string): ISpy {
         let segments = propName.split("."),
             segmentLen = segments.length,
             nextObj = this.object,
@@ -115,18 +156,16 @@ export class Mock<T> {
     }
 
     spyOn(propSelector: (obj: T) => any): ISpy {
-        let propName: string,
-            pattern = new RegExp("return\\s([a-zA-Z_$][a-zA-Z0-9_$]*\\.?)+"),
-            matches = pattern.exec(propSelector.toString());
+        let propName = this.getPropertyName(propSelector),
+            spy: ISpy = this.createSpy(propName);
 
-        if (!matches || !matches[0]) { throw "propSelector regex exception"; }
 
-        propName = matches[0].replace("return ", "").trim();
-        if (propName.indexOf(".") !== -1) {
-            propName = propName.substring(propName.indexOf(".") + 1);
-        }
+        return this.defineDeepProperty(propName, spy);
+    }
 
-        return this.spyOnDeepProperty(propName);
+    define<C>(propSelector: (obj: T) => C, value: C) {
+        let propName = this.getPropertyName(propSelector);
+        this.defineDeepProperty(propName, value);
     }
 }
 
