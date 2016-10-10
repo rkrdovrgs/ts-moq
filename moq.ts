@@ -10,36 +10,73 @@ export interface ISpyAnd extends jasmine.SpyAnd {
 }
 
 export interface ISpyPromise {
+    /**
+     * 
+     * @param {Func<TResolve, TReject>} - Fake function to execute and resolve & reject promise
+     * @returns a custom spy with promise capabilities
+     */
     (fn: (resolve: (value: any) => Promise<any>, reject: (value: any) => Promise<any>) => Promise<any>): ISpy;
+
+    /**
+     * Creates a promise that resolves itself
+     * @param {T} value - value to be returned once the promise has completed
+     * @returns a promise mock
+     */
     resolve: (value: any) => ISpy;
+
+    /**
+     * Creates a promise that rejects itself
+     * @param {T} value - value error to be returned once the promise has erroed
+     * @returns a promise mock
+     */
     reject: (value: any) => ISpy;
 }
 
 export class PromiseMockQueue {
     queue: Promise<any>[];
 
+    /**
+     * Creates an instance of a promise queue
+     */
     constructor() {
         this.queue = [];
     }
 
+    /**
+     * Creates a promise that resolves itself
+     * @param {T} value - value to be returned once the promise has completed
+     * @returns a promise mock
+     */
     resolve<T>(value: T): Promise<T> {
         let promise = Promise.resolve(value);
         this.queue.push(promise);
         return promise;
     }
 
+    /**
+     * Creates a promise that rejects itself
+     * @param {T} value - value error to be returned once the promise has erroed
+     * @returns a promise mock
+     */
     reject<T>(value: T): Promise<void> {
         let promise = Promise.reject(value);
         this.queue.push(promise);
         return promise;
     }
 
+    /**
+     * Processes all pending promises in queue and empties the queue
+     * @returns a promise to be resolved once all pending promises have been executed
+     */
     all(): Promise<any> {
         let promise = Promise.all(this.queue);
         this.queue.splice(0, this.queue.length);
         return promise;
     }
 
+    /**
+     * Resets the promise queue
+     */
     reset() {
         this.queue = [];
     }
@@ -50,10 +87,19 @@ export class Mock<T> {
 
     static promiseQueue: PromiseMockQueue = new PromiseMockQueue();
 
+    /**
+     * Used to create an instance of a mock of T
+     * @param {T} Constructor?
+     */
     constructor(Constructor? : T) {
         this.object = !!Constructor ? new (<any>Constructor)() : <T>{};
     }
 
+    /**
+     * Gets the name of the property based on a selector
+     * @param {Expression<Func<T>>} propSelector - property selector to get the property name
+     * @returns the property name
+     */
     private getPropertyName(propSelector: (obj: T) => any) : string {
         let propName: string,
             pattern = new RegExp("return\\s([a-zA-Z_$][a-zA-Z0-9_$]*\\.?)+"),
@@ -69,6 +115,12 @@ export class Mock<T> {
         return propName;
     }
 
+    /**
+     * Sets the value of a property by name
+     * @param {string} propName - name of the property
+     * @param {C} value - value to be assigned to the property
+     * @returns the value that was assigned
+     */
     private defineDeepProperty<C>(propName: string, value: C) : C {
         let segments = propName.split("."),
             segmentLen = segments.length,
@@ -94,7 +146,11 @@ export class Mock<T> {
         return value;
     }
 
-
+    /**
+     * Creates a spy on a function (e.g.: to be used to mock service calls)
+     * @param {string} propName - name of the function to be mocked
+     * @returns a spy on the given function
+     */
     private spyOnDeepProperty(propName:string): ISpy {
         let segments = propName.split("."),
             segmentLen = segments.length,
@@ -121,6 +177,11 @@ export class Mock<T> {
         return spy;
     }
 
+    /**
+     * Creates the custom spy structure
+     * @param {string} name - name of the spy
+     * @returns a custom spy with promise functionality
+     */
     private createSpy(name: string): ISpy {
         let spy: ISpy = <ISpy>jasmine.createSpy(name);
 
@@ -155,6 +216,11 @@ export class Mock<T> {
         return spy;
     }
 
+    /**
+     * Creates a spy on a given property
+     * @param {Expression<Func<T>>} propSelector - property selector to get the property name
+     * @returns a custom spy with promise capabilities
+     */
     spyOn(propSelector: (obj: T) => any): ISpy {
         let propName = this.getPropertyName(propSelector),
             spy: ISpy = this.createSpy(propName);
@@ -163,6 +229,11 @@ export class Mock<T> {
         return this.defineDeepProperty(propName, spy);
     }
 
+    /**
+     * Sets a property value on a given property
+     * @param {Expression<Func<T>>} propSelector - property selector to get the property name
+     * @param {C} value - value to be assigned to the property
+     */
     define<C>(propSelector: (obj: T) => C, value: C) {
         let propName = this.getPropertyName(propSelector);
         this.defineDeepProperty(propName, value);

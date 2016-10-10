@@ -251,8 +251,9 @@ paket-files/
 .idea/
 *.sln.iml
 typings/
-gulpfile.js
 *.d.ts
 !index.d.ts
 *.js
 *.js.map
+!gulp/**/*.js
+gulp/paths.js
