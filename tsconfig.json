@@ -1,15 +1,15 @@
 ﻿{
-    "exclude": [
-        "typings/main.d.ts",
-        "typings/main",
-        "node_modules"
-    ],
+  "exclude": [
+    "typings/main.d.ts",
+    "typings/main",
+    "node_modules"
+  ],
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
     "moduleResolution": "classic"
   }
