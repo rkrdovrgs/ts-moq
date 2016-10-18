@@ -1,6 +1,6 @@
 {
   "name": "ts-moq",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "Helpers to create mocks for unit testing Typescript applications",
   "main": "moq.js",
   "scripts": {
