@@ -14,7 +14,8 @@ gulp.task('sync',  function () {
         .pipe(gulp.dest(paths.typings));
 
     gulp.src([
-        './**/*.ts', './**/*.js', 
+        './**/*.ts', 
+        './**/*.js', 
         
         //exclude
         '!./node_modules/**/*.js', 

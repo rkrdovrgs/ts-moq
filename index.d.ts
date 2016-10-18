@@ -2,10 +2,6 @@ declare module "ts-moq" {
     export * from "moq";
 }
 
-declare module "ts-moq/async" {
-    export * from "async";
-}
-
 interface ISpec {
     describe(await?): void;
 }
