@@ -1,16 +1,27 @@
 ﻿{
   "exclude": [
-    "typings/main.d.ts",
-    "typings/main",
     "node_modules"
   ],
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "amd",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "classic"
+    "inlineSources": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": false,
+    "outDir": "./dist/amd",
+    "rootDir": "./src",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./custom_typings"
+    ]
   }
 }

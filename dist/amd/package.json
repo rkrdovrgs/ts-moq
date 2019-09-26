@@ -8,8 +8,8 @@
     "build": "tsc",
     "clean": "del-cli dist",
     "lint": "tslint 'src/**/*.ts'",
-    "publish": "npm run clean && npm ci && npm run build && npm version minor && cp package.json dist/amd/package.json && git push && git push --tags && npm publish",
-    "tt": ""
+    "publish": "npm run clean && npm ci && npm run build",
+    "tt": "cp package.json dist/amd/package.json"
   },
   "license": "ISC",
   "dependencies": {
