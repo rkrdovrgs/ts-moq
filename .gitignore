@@ -257,3 +257,4 @@ typings/
 *.js.map
 !gulp/**/*.js
 gulp/paths.js
+dist/
