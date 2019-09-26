@@ -1,6 +1,6 @@
 {
   "name": "ts-moq",
-  "version": "1.0.40",
+  "version": "1.0.36",
   "description": "Helper utilities for unit testing",
   "main": "moq.js",
   "author": "rkrdo.vrgs@gmail.com",
@@ -19,8 +19,5 @@
     "del-cli": "^3.0.0",
     "ts-lint": "^4.5.1",
     "typescript": "^3.6.3"
-  },
-  "publishConfig": {
-    "registry": "https://unitynxt.pkgs.visualstudio.com/_packaging/Cti.Platform.UI.Components/npm/registry"
   }
 }
