@@ -1,6 +1,6 @@
 {
   "name": "ts-moq",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Helper utilities for unit testing",
   "main": "moq.js",
   "author": "rvargas@confluence.com",
