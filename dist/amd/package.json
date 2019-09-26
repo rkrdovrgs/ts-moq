@@ -3,7 +3,7 @@
   "version": "1.0.37",
   "description": "Helper utilities for unit testing",
   "main": "moq.js",
-  "author": "rkrdo.vrgs@gmail.com",
+  "author": "rvargas@confluence.com",
   "scripts": {
     "build": "tsc",
     "clean": "del-cli dist",
