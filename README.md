@@ -47,7 +47,7 @@ it("should disable the edit option until the has loaded", async (done) => {
     await Mock.promiseQueue.flushAndWait();
     
      // assert on what should happen when the promise is resolved (data is back from the server)
-    expect(sut.disableEdit).toBe(true);
+    expect(sut.disableEdit).toBe(false);
 
     done();
 });
